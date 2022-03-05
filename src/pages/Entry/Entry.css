@@ -1,0 +1,7 @@
+
+input {
+  width: 230px;
+  height: 30px;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+}

@@ -1,9 +1,10 @@
 .provider-list li {
   padding: 0 2em;
 }
-.provider-list li:nth-child(odd){
-background-color: var(--accent-color);
-color: aliceblue;
+
+.provider-list li:nth-child(odd) {
+  background-color: var(--accent-color);
+  color: aliceblue;
 }
 
 .provider-list li:first-child {
