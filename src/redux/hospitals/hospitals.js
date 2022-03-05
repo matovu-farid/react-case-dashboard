@@ -7,7 +7,7 @@ const ADD_HOSPITAL = 'HOSPITALS/ADD_HOSPITAL';
 const UPDATE_HOSPITAL = 'HOSPITALS/UPDATE_HOSPITAL';
 const REMOVE_HOSPITAL = 'HOSPITALS/REMOVE_HOSPITAL';
 const FETCH_HOSPITALS = 'HOSPITALS/FETCH';
-const HEALTH_PROVIDERS = 'health_provider';
+const HEALTH_PROVIDERS = 'health_providers';
 
 export const addHospital = (payload) => async (dispatch) => {
   const { id } = await addDoc(collection(db, HEALTH_PROVIDERS), payload);
