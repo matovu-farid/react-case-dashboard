@@ -15,6 +15,11 @@ button {
   cursor: pointer;
 }
 
+ul {
+  padding-left: 0;
+  margin: 0;
+}
+
 li {
   list-style-type: none;
   display: flex;
@@ -29,6 +34,7 @@ li > button {
 }
 
 body {
+  margin: 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,16 +55,16 @@ form {
   align-items: center;
 }
 
-nav {
-  display: flex;
-  text-align: end;
-  width: 100%;
-  justify-content: flex-end;
-}
 
 #root {
-  width: 100vw;
+  width: 96.8%;
+  padding: 0;
+  margin: 0;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 
   --accent-color: #9a97a8;
   --main-color: #302e37;

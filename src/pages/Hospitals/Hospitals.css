@@ -1,3 +1,6 @@
+.provider-list {
+  width: 70%;
+}
 .provider-list li {
   padding: 0 2em;
 }
