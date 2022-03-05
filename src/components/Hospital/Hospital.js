@@ -1,7 +1,8 @@
 import propTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { removeHospital } from '../redux/hospitals/hospitals';
+import { removeHospital } from '../../redux/hospitals/hospitals';
+import ListItem from '../ListItem/ListItem';
 import './Hospital.css';
 
 const Hospital = ({ name, id }) => {
@@ -15,13 +16,7 @@ const Hospital = ({ name, id }) => {
     navigate(`/entry/${id}`);
   };
   return (
-    <li className="hospital-item">
-      <p>{name}</p>
-      <div className="button-list">
-        <button onClick={onRemove} type="button">Remove</button>
-        <button onClick={onEdit} type="button">Edit</button>
-      </div>
-    </li>
+    <ListItem name={name} onEdit={onEdit} onRemove={onRemove} />
   );
 };
 Hospital.propTypes = {

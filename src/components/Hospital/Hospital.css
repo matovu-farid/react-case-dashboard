@@ -6,9 +6,3 @@
 .button-list > button {
   margin: 0 5px;
 }
-
-.hospital-item {
-  justify-content: space-between;
-  display: flex;
-  align-items: center;
-}
