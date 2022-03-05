@@ -7,12 +7,22 @@ const Navbar = () => (
     <ul className="nav-list">
       <li>
         <NavLink to="/">
-          Home
+          Hospitals
         </NavLink>
       </li>
       <li>
         <NavLink to="/entry/item">
-          Add
+          Edit-Hospital
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="cities">
+          Cities
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/cityentry/item">
+          Edit-Cities
         </NavLink>
       </li>
     </ul>

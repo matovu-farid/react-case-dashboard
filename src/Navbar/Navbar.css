@@ -1,7 +1,9 @@
 .nav-bar {
   width: 100%;
   display: flex;
+
   margin: 0;
+  margin-bottom: 4em;
   padding: 30px 20px;
   position: sticky;
   top: 0;
