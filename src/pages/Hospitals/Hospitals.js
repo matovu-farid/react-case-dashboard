@@ -1,8 +1,7 @@
 import './Hospitals.css';
 
 import { useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import Hospital from '../../components/Hospital';
+import Hospital from '../../components/Hospital/Hospital';
 
 const Hospitals = () => {
   const data = useSelector((state) => state.hospitals);
@@ -10,7 +9,7 @@ const Hospitals = () => {
   return (
     <ul className="provider-list">
       {
-        data.map(({ name, id }) => (<Hospital id={id} key={uuidv4()} name={name} />))
+        data.map(({ name, id }) => (<Hospital id={id} key={id} name={name} />))
       }
 
     </ul>
