@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+// import Entry from './pages/Entry/Entry';
+import { fetchHospitals } from './redux/hospitals/hospitals';
+import Hospitals from './pages/Hospitals/Hospitals';
+import Entry from './pages/Entry/Entry';
+import Navbar from './Navbar/Navbar';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchHospitals());
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Hospitals />} />
+        <Route path="/entry/:id" element={<Entry />} />
+
+      </Routes>
+    </>
   );
 }
 
