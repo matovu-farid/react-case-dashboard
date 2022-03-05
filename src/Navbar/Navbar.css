@@ -1,0 +1,19 @@
+.nav-bar {
+  width: 100vw;
+  display: flex;
+}
+
+.nav-list {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.nav-list > li {
+  padding: 0 5px;
+}
+
+
+.active {
+  color: brown;
+}
