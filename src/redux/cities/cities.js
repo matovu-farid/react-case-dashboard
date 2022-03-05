@@ -1,6 +1,7 @@
 import {
   addDoc, collection, deleteDoc, doc, getDocs, updateDoc,
 } from 'firebase/firestore/lite';
+
 import { db } from '../../firebase/firebase';
 
 const ADD_CITY = 'CITIES/ADD_CITY';
