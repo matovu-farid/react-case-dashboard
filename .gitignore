@@ -11,6 +11,8 @@
 # production
 /build
 
+firebase.js
+.eslintcache
 # misc
 .DS_Store
 .env.local
