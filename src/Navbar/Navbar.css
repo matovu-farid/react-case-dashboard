@@ -6,7 +6,6 @@
   position: sticky;
   top: 0;
   background-color: aliceblue;
-
   box-shadow: 0 2px 5px black;
 }
 
@@ -16,6 +15,7 @@ nav {
   width: 100%;
   justify-content: flex-end;
 }
+
 .nav-list {
   display: flex;
   width: 100%;
