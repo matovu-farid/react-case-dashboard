@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-import './Entry.css';
+
 import { geohashForLocation } from 'geofire-common';
 import { GeoPoint } from 'firebase/firestore/lite';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addHospital, updateHospital } from '../../redux/hospitals/hospitals';
+import { addCity, updateCity } from '../../redux/cities/cities';
 
-const Entry = () => {
+const CityEntry = () => {
   const [name, setName] = useState('');
-  const [contact, setContact] = useState('');
   const [longitudeInput, setLongitude] = useState('');
   const { id } = useParams();
   const [latitudeInput, setLatitude] = useState('');
@@ -24,38 +23,35 @@ const Entry = () => {
     };
   };
 
-  const item = useSelector((state) => state.hospitals).find((hospital) => hospital.id === id);
+  const item = useSelector((state) => state.cities).find((city) => city.id === id);
   useEffect(() => {
     if (item) {
-      const { name, contact, position: { geopoint: { latitude, longitude } } } = item;
-      setContact(contact);
+      const { name, position: { geopoint: { latitude, longitude } } } = item;
       setName(name);
       setLatitude(latitude);
       setLongitude(longitude);
     }
   }, []);
   const dispatch = useDispatch();
-  const onClick = () => {
-    const hospital = {
-      name,
-      contact,
-      position: getPosition(),
-    };
-    if (item) dispatch(updateHospital({ ...hospital, id }));
-    else dispatch(addHospital(hospital));
-  };
+
   const viewOnMap = () => {
     if (latitudeInput && longitudeInput) {
       const url = `https://www.google.co.ug/maps/@${latitudeInput},${longitudeInput},15z`;
       window.open(url, '_blank');
     }
   };
+  const onClick = () => {
+    const city = {
+      name,
+      position: getPosition(),
+    };
+    if (item) dispatch(updateCity({ ...city, id }));
+    else dispatch(addCity(city));
+  };
   return (
     <form>
-      <label htmlFor="name">Hospital Name</label>
+      <label htmlFor="name">City</label>
       <input type="text" value={name} onChange={(e) => setName(e.target.value)} name="name" className="input" required />
-      <label htmlFor="contact">Contact</label>
-      <input type="text" value={contact} onChange={(e) => setContact(e.target.value)} name="contact" className="input" required />
       <fieldset>
         <legend>Location</legend>
         <label htmlFor="latitude">Latitude</label>
@@ -74,8 +70,9 @@ const Entry = () => {
           </div>
         ) : <button onClick={viewOnMap} type="button">View</button>
 }
+
     </form>
   );
 };
 
-export default Entry;
+export default CityEntry;

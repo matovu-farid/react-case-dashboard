@@ -5,3 +5,11 @@ input {
   border-radius: 5px;
   border: 2px solid var(--main-color);
 }
+
+.entry-buttons {
+  display: flex;
+}
+
+.entry-buttons > button {
+  margin: 5px;
+}
