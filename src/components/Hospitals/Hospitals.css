@@ -14,11 +14,9 @@
 .provider-list li:first-child {
   border: none;
   border-radius: 1em 1em 0 0;
-  
 }
 
 .provider-list li:last-child {
   border: none;
   border-radius: 0 0 1em 1em;
- 
 }

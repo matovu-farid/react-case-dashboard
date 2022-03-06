@@ -2,7 +2,7 @@ import './ListItem.css';
 import propTypes from 'prop-types';
 
 const ListItem = ({ name, onEdit, onRemove }) => (
-  <li className="hospital-item">
+  <li className="item">
     <p>{name}</p>
     <div className="button-list">
       <button onClick={onRemove} type="button">Remove</button>

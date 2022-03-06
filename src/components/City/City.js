@@ -2,7 +2,7 @@ import propTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeCity } from '../../redux/cities/cities';
-import ListItem from '../ListItem/ListItem';
+import CityListItem from '../CityListItem/CityListItem';
 
 const City = ({ name, id }) => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const City = ({ name, id }) => {
     navigate(`/cityentry/${id}`);
   };
   return (
-    <ListItem name={name} onEdit={onEdit} onRemove={onRemove} />
+    <CityListItem id={id} name={name} onEdit={onEdit} onRemove={onRemove} />
   );
 };
 City.propTypes = {
