@@ -6,7 +6,7 @@ import { fetchWithinRange } from '../../redux/hospitals/hospital_by_city';
 
 const HospitalsByCity = () => {
   const dispatch = useDispatch();
-  const { latitude, longitude } = useCity();
+  const { latitude, longitude, radius } = useCity();
 
   useEffect(() => {
     if (latitude && longitude) {
@@ -15,7 +15,7 @@ const HospitalsByCity = () => {
         {
           latitude,
           longitude,
-          radiusInM: 50000000,
+          radius,
         },
       ));
     }
