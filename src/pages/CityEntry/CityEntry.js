@@ -44,9 +44,11 @@ const CityEntry = () => {
 
           <div className="entry-buttons">
             <button onClick={onClick} type="button">Add</button>
-            <button onClick={viewOnMap} type="button">View</button>
+            <button onClick={viewOnMap} type="button">View On Maps</button>
           </div>
-        ) : <button onClick={viewOnMap} type="button">View</button>
+        )
+
+          : <button onClick={onClick} type="button">Add</button>
 }
 
     </form>

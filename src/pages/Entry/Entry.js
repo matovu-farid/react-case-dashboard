@@ -40,10 +40,8 @@ const Entry = () => {
   };
   return (
     <form>
-      <label htmlFor="name">Hospital Name</label>
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} name="name" className="input" required />
-      <label htmlFor="contact">Contact</label>
-      <input type="text" value={contact} onChange={(e) => setContact(e.target.value)} name="contact" className="input" required />
+      <input type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} name="name" className="input" required />
+      <input type="text" value={contact} placeholder="contact" onChange={(e) => setContact(e.target.value)} name="contact" className="input" required />
       <fieldset>
         <legend>Location</legend>
         <label htmlFor="latitude">Latitude</label>
@@ -58,9 +56,10 @@ const Entry = () => {
 
           <div className="entry-buttons">
             <button onClick={onClick} type="button">Add</button>
-            <button onClick={viewOnMap} type="button">View</button>
+            <button onClick={viewOnMap} type="button">View On Maps</button>
           </div>
-        ) : <button onClick={viewOnMap} type="button">View</button>
+        )
+          : <button onClick={onClick} type="button">Add</button>
 }
     </form>
   );
