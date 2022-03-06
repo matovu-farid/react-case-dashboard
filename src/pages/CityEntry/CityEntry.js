@@ -6,7 +6,7 @@ import useCity from '../../Hooks/useCity';
 const CityEntry = () => {
   const {
 
-    id, item, name, setName, longitude, setLongitude, latitude, setLatitude,
+    id, item, name, setName, longitude, setLongitude, latitude, setLatitude, radius, setRadius,
   } = useCity();
   const dispatch = useDispatch();
 
@@ -19,6 +19,7 @@ const CityEntry = () => {
   const onClick = () => {
     const city = {
       name,
+      radius,
       position: getPosition(latitude, longitude),
     };
     if (item) dispatch(updateCity({ ...city, id }));
@@ -26,8 +27,9 @@ const CityEntry = () => {
   };
   return (
     <form>
-      <label htmlFor="name">City</label>
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} name="name" className="input" required />
+
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="City" name="name" className="input" required />
+      <input type="text" value={radius} onChange={(e) => setRadius(e.target.value)} placeholder="Radius" className="input" required />
       <fieldset>
         <legend>Location</legend>
         <label htmlFor="latitude">Latitude</label>
