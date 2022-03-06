@@ -3,14 +3,14 @@ import propTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Hospital from '../Hospital/Hospital';
-import { searchHospital } from '../../redux/hospitals/search';
+import { searchItem } from '../../redux/hospitals/search';
 
 const Hospitals = ({ data }) => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const searchData = useSelector((state) => state.search);
   useEffect(() => {
-    searchHospital({
+    searchItem({
       name: search,
       data,
     }, dispatch);

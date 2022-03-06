@@ -1,16 +1,17 @@
-const SEARCH_HOSPITALS = 'HOSPITALS/SEARCH';
-export const searchHospital = (payload, dispatch) => {
+const SEARCH_ITEMS = 'SEARCH/ITEMS';
+
+export const searchItem = (payload, dispatch) => {
   dispatch(
     {
-      type: SEARCH_HOSPITALS,
+      type: SEARCH_ITEMS,
       payload,
     },
   );
 };
 const searchReducer = (state = [], { type, payload }) => {
   switch (type) {
-    case SEARCH_HOSPITALS: return payload.data.filter(
-      (hospital) => hospital.name.toLocaleLowerCase().includes(
+    case SEARCH_ITEMS: return payload.data.filter(
+      (item) => item.name.toLocaleLowerCase().includes(
         payload.name.toLocaleLowerCase(),
       ),
     );
