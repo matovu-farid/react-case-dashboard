@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import './Entry.css';
-import { geohashForLocation } from 'geofire-common';
-import { GeoPoint } from 'firebase/firestore/lite';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addHospital, updateHospital } from '../../redux/hospitals/hospitals';
+import getPosition from '../../helpers/get_position';
 
 const Entry = () => {
   const [name, setName] = useState('');
@@ -12,17 +11,6 @@ const Entry = () => {
   const [longitudeInput, setLongitude] = useState('');
   const { id } = useParams();
   const [latitudeInput, setLatitude] = useState('');
-  const getPosition = () => {
-    const latitude = parseFloat(latitudeInput);
-    const longitude = parseFloat(longitudeInput);
-    const hash = geohashForLocation([latitude, longitude]);
-
-    const point = new GeoPoint(latitude, longitude);
-    return {
-      geohash: hash,
-      geopoint: point,
-    };
-  };
 
   const item = useSelector((state) => state.hospitals).find((hospital) => hospital.id === id);
   useEffect(() => {
@@ -39,7 +27,7 @@ const Entry = () => {
     const hospital = {
       name,
       contact,
-      position: getPosition(),
+      position: getPosition(latitudeInput, longitudeInput),
     };
     if (item) dispatch(updateHospital({ ...hospital, id }));
     else dispatch(addHospital(hospital));
