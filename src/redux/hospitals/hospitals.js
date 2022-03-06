@@ -45,7 +45,6 @@ export const fetchHospitals = () => async (dispatch) => {
     payload,
   });
 };
-
 const hospitalsReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_HOSPITAL: return [...state, action.payload];

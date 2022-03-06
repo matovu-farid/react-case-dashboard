@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Hospital from '../../components/Hospital/Hospital';
+import Hospitals from '../../components/Hospitals/Hospitals';
 import useCity from '../../Hooks/useCity';
 import { fetchWithinRange } from '../../redux/hospitals/hospital_by_city';
 
@@ -22,12 +22,7 @@ const HospitalsByCity = () => {
   }, [latitude, longitude]);
   const data = useSelector((state) => state.hospitalsByCity);
   return (
-    <ul className="provider-list">
-      {
-        data.map(({ name, id }) => (<Hospital id={id} key={id} name={name} />))
-      }
-
-    </ul>
+    <Hospitals data={data} />
   );
 };
 export default HospitalsByCity;
