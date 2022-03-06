@@ -36,14 +36,15 @@ export const removeHospital = (payload) => async (dispatch) => {
 };
 
 export const fetchHospitals = () => async (dispatch) => {
-  const { docs } = await getDocs(collection(db, HEALTH_PROVIDERS));
+  const providers = collection(db, HEALTH_PROVIDERS);
+  const { docs } = await getDocs(providers);
+
   const payload = docs.map((doc) => ({ ...doc.data(), id: doc.id }));
   dispatch({
     type: FETCH_HOSPITALS,
     payload,
   });
 };
-
 const hospitalsReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_HOSPITAL: return [...state, action.payload];

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import './Entry.css';
-import { geohashForLocation } from 'geofire-common';
-import { GeoPoint } from 'firebase/firestore/lite';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addHospital, updateHospital } from '../../redux/hospitals/hospitals';
+import getPosition from '../../helpers/get_position';
 
 const Entry = () => {
   const [name, setName] = useState('');
@@ -12,17 +11,6 @@ const Entry = () => {
   const [longitudeInput, setLongitude] = useState('');
   const { id } = useParams();
   const [latitudeInput, setLatitude] = useState('');
-  const getPosition = () => {
-    const latitude = parseFloat(latitudeInput);
-    const longitude = parseFloat(longitudeInput);
-    const hash = geohashForLocation([latitude, longitude]);
-
-    const point = new GeoPoint(latitude, longitude);
-    return {
-      geohash: hash,
-      geopoint: point,
-    };
-  };
 
   const item = useSelector((state) => state.hospitals).find((hospital) => hospital.id === id);
   useEffect(() => {
@@ -39,17 +27,21 @@ const Entry = () => {
     const hospital = {
       name,
       contact,
-      position: getPosition(),
+      position: getPosition(latitudeInput, longitudeInput),
     };
     if (item) dispatch(updateHospital({ ...hospital, id }));
     else dispatch(addHospital(hospital));
   };
+  const viewOnMap = () => {
+    if (latitudeInput && longitudeInput) {
+      const url = `https://www.google.co.ug/maps/@${latitudeInput},${longitudeInput},15z`;
+      window.open(url, '_blank');
+    }
+  };
   return (
     <form>
-      <label htmlFor="name">Hospital Name</label>
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} name="name" className="input" required />
-      <label htmlFor="contact">Contact</label>
-      <input type="text" value={contact} onChange={(e) => setContact(e.target.value)} name="contact" className="input" required />
+      <input type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} name="name" className="input" required />
+      <input type="text" value={contact} placeholder="contact" onChange={(e) => setContact(e.target.value)} name="contact" className="input" required />
       <fieldset>
         <legend>Location</legend>
         <label htmlFor="latitude">Latitude</label>
@@ -59,7 +51,16 @@ const Entry = () => {
         <input type="text" id="longitude" value={longitudeInput} onChange={(e) => setLongitude(e.target.value)} name="longitude" className="input" placeholder="32.2903" required pattern="3\d{1}\.\d+" />
 
       </fieldset>
-      <button onClick={onClick} type="button">Add</button>
+      {
+        (id !== 'item') ? (
+
+          <div className="entry-buttons">
+            <button onClick={onClick} type="button">Add</button>
+            <button onClick={viewOnMap} type="button">View On Maps</button>
+          </div>
+        )
+          : <button onClick={onClick} type="button">Add</button>
+}
     </form>
   );
 };
