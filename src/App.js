@@ -9,6 +9,7 @@ import Navbar from './Navbar/Navbar';
 import Cities from './pages/Cities/Cities';
 import CityEntry from './pages/CityEntry/CityEntry';
 import { fetchCities } from './redux/cities/cities';
+import HospitalsByCity from './pages/HospitalsByCity/HospitalsByCity';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ function App() {
 
         <Route path="/cities" element={<Cities />} />
         <Route path="/cityentry/:id" element={<CityEntry />} />
+
+        <Route path="/cities/:id" element={<HospitalsByCity />} />
       </Routes>
     </>
   );

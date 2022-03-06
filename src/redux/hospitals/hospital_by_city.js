@@ -1,17 +1,43 @@
 import {
-  GeoPoint,
+  collection, endAt, getDocs, orderBy, query, startAt, updateDoc,
 } from 'firebase/firestore/lite';
-import { GeoFirestore } from '../../firebase/firebase';
+import { geohashQueryBounds } from 'geofire-common';
+import { db } from '../../firebase/firebase';
 
 const HEALTH_PROVIDERS = 'health_providers';
 const FETCH_HOSPITALSBYCITY = 'CITY/HOSPITALS/FETCH';
-export const fetchWithinRange = ({ latitude, longitude, radius }) => async (dispatch) => {
-  const geoCollection = GeoFirestore.collection(HEALTH_PROVIDERS);
-  const query = geoCollection.near({
-    center: new GeoPoint(latitude, longitude),
-    radius,
+export const popGeohash = async () => {
+  const snaps = await getDocs(collection(db, HEALTH_PROVIDERS));
+
+  const arr = snaps.docs.map((doc) => updateDoc(doc.ref, {
+    radius: 50000,
+  }));
+
+  Promise.all(arr);
+};
+export const fetchWithinRange = ({ latitude, longitude, radiusInM }) => async (dispatch) => {
+  // Find cities within 50km of London
+  const center = [parseFloat(latitude), parseFloat(longitude)];
+
+  const bounds = geohashQueryBounds(center, radiusInM);
+  const promises = bounds.map((bound) => {
+    const q = query(collection(db, HEALTH_PROVIDERS),
+      orderBy('geohash'), startAt(bound[0]), endAt(bound[1]));
+
+    return getDocs(q);
   });
-  const payload = (await query.get()).docs.map((doc) => doc.data());
+
+  // Collect all the query results together into a single list
+  const snapshots = await Promise.all(promises);
+  const matchingDocs = [];
+
+  snapshots.forEach((snap) => {
+    snap.docs.forEach((doc) => {
+      matchingDocs.push(doc);
+    });
+  });
+
+  const payload = matchingDocs.map((doc) => ({ ...doc.data(), id: doc.id }));
   dispatch({
     type: FETCH_HOSPITALSBYCITY,
     payload,

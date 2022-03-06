@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
 import hospitalsReducer from './hospitals/hospitals';
 import citysReducer from './cities/cities';
 import hospitalsByCityReducer from './hospitals/hospital_by_city';
@@ -8,7 +8,7 @@ import hospitalsByCityReducer from './hospitals/hospital_by_city';
 const reducer = combineReducers({
   hospitals: hospitalsReducer,
   cities: citysReducer,
-  hopitalsByCity: hospitalsByCityReducer,
+  hospitalsByCity: hospitalsByCityReducer,
 });
-const store = createStore(reducer, applyMiddleware(logger, thunk));
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 export default store;
