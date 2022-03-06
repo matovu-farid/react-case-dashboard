@@ -5,9 +5,11 @@ html {
 a {
   text-decoration: none;
 }
+
 input {
   margin: 1em 0;
 }
+
 button {
   background-color: var(--main-color);
   color: white;
