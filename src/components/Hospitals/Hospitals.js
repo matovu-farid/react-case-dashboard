@@ -2,28 +2,12 @@ import './Hospitals.css';
 import propTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Card, List, TextField } from '@mui/material';
-import { Box } from '@mui/system';
-import { makeStyles } from '@mui/styles';
+import { TextField } from '@mui/material';
 import Hospital from '../Hospital/Hospital';
 import { searchItem } from '../../redux/hospitals/search';
-
-const useStyles = makeStyles((theme) => ({
-  list: {
-    borderRadius: 3,
-    overflow: 'hidden',
-    padding: 0,
-    '& li:nth-child(odd)': {
-      backgroundColor: theme.palette.secondary.light,
-
-    },
-
-  },
-
-}));
+import MyList from '../List';
 
 const Hospitals = ({ data }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const searchData = useSelector((state) => state.search);
@@ -39,27 +23,17 @@ const Hospitals = ({ data }) => {
 
   return (
     <>
-      <Box>
 
-        <TextField onChange={onInput} value={search} placeholder="Search ..." />
+      <TextField onChange={onInput} value={search} placeholder="Search ..." />
 
-      </Box>
-      <Card
-        sx={{
-          borderRadius: '2em',
-
-        }}
-      >
-
-        <List className={classes.list}>
-          {
+      <MyList>
+        {
           (searchData)
             ? searchData.map(({ name, id }) => (<Hospital id={id} key={id} name={name} />))
             : data.map(({ name, id }) => (<Hospital id={id} key={id} name={name} />))
       }
 
-        </List>
-      </Card>
+      </MyList>
     </>
   );
 };

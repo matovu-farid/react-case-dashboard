@@ -8,15 +8,15 @@ import './Hospital.css';
 const Hospital = ({ name, id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onRemove = () => {
+  const remove = () => {
     dispatch(removeHospital(id));
   };
 
-  const onEdit = () => {
+  const edit = () => {
     navigate(`/entry/${id}`);
   };
   return (
-    <MyListItem name={name} onEdit={onEdit} onRemove={onRemove} />
+    <MyListItem name={name} functions={{ edit, remove }} />
   );
 };
 Hospital.propTypes = {
