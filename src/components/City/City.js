@@ -2,20 +2,23 @@ import propTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeCity } from '../../redux/cities/cities';
-import CityListItem from '../CityListItem/CityListItem';
+import MyListItem from '../ListItem';
 
 const City = ({ name, id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onRemove = () => {
+  const remove = () => {
     dispatch(removeCity(id));
   };
 
-  const onEdit = () => {
+  const edit = () => {
     navigate(`/cityentry/${id}`);
   };
+  const view = () => {
+    navigate(`/cities/${id}`);
+  };
   return (
-    <CityListItem id={id} name={name} onEdit={onEdit} onRemove={onRemove} />
+    <MyListItem id={id} name={name} functions={{ edit, remove, view }} />
   );
 };
 City.propTypes = {

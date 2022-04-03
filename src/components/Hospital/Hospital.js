@@ -2,21 +2,21 @@ import propTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeHospital } from '../../redux/hospitals/hospitals';
-import ListItem from '../ListItem/ListItem';
+import MyListItem from '../ListItem';
 import './Hospital.css';
 
 const Hospital = ({ name, id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onRemove = () => {
+  const remove = () => {
     dispatch(removeHospital(id));
   };
 
-  const onEdit = () => {
+  const edit = () => {
     navigate(`/entry/${id}`);
   };
   return (
-    <ListItem name={name} onEdit={onEdit} onRemove={onRemove} />
+    <MyListItem name={name} functions={{ edit, remove }} />
   );
 };
 Hospital.propTypes = {

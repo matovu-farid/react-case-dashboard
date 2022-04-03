@@ -2,8 +2,10 @@ import './Hospitals.css';
 import propTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { TextField } from '@mui/material';
 import Hospital from '../Hospital/Hospital';
 import { searchItem } from '../../redux/hospitals/search';
+import MyList from '../List';
 
 const Hospitals = ({ data }) => {
   const dispatch = useDispatch();
@@ -21,15 +23,17 @@ const Hospitals = ({ data }) => {
 
   return (
     <>
-      <input onChange={onInput} value={search} placeholder="Search ..." className="input" type="text" />
-      <ul className="provider-list">
+
+      <TextField onChange={onInput} value={search} placeholder="Search ..." />
+
+      <MyList>
         {
           (searchData)
             ? searchData.map(({ name, id }) => (<Hospital id={id} key={id} name={name} />))
             : data.map(({ name, id }) => (<Hospital id={id} key={id} name={name} />))
       }
 
-      </ul>
+      </MyList>
     </>
   );
 };
