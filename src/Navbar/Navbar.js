@@ -15,64 +15,45 @@ import Box from '@mui/material/Box';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import propTypes from 'prop-types';
+import MYROUTES from './myroutes';
 
-const MyDrawer = ({ toggleDrawer, open }) => {
-  const myRoutes = [
-    {
-      name: 'Hospitals',
-      path: '/',
-    },
-    {
-      name: 'Edit-Hospital',
-      path: '/entry/item',
-    },
-    {
-      name: 'Cities',
-      path: '/cities',
-    },
-    {
-      name: 'Edit-Cities',
-      path: '/cityentry/item',
-    },
-  ];
-  return (
-    <Drawer
-      anchor="left"
-      open={open}
+const MyDrawer = ({ toggleDrawer, open }) => (
+  <Drawer
+    anchor="left"
+    open={open}
+  >
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row-reverse',
+      }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row-reverse',
-        }}
-      >
 
-        <IconButton onClick={toggleDrawer}>
-          <ChevronLeftIcon />
+      <IconButton onClick={toggleDrawer}>
+        <ChevronLeftIcon />
 
-        </IconButton>
-      </Box>
+      </IconButton>
+    </Box>
 
-      <Divider />
-      <Box
-        onClick={toggleDrawer}
-        onKeyDown={toggleDrawer}
-      >
+    <Divider />
+    <Box
+      onClick={toggleDrawer}
+      onKeyDown={toggleDrawer}
+    >
 
-        <List>
-          {
-            myRoutes.map((route) => (
+      <List>
+        {
+            MYROUTES.map((route) => (
               <ListItemButton key={route.path} to={route.path} component={NavLink}>
                 <ListItemText primary={route.name} />
               </ListItemButton>
 
             ))
           }
-        </List>
-      </Box>
-    </Drawer>
-  );
-};
+      </List>
+    </Box>
+  </Drawer>
+);
 MyDrawer.propTypes = {
   toggleDrawer: propTypes.func.isRequired,
   open: propTypes.bool.isRequired,
