@@ -16,55 +16,63 @@ import Box from '@mui/material/Box';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import propTypes from 'prop-types';
 
-const MyDrawer = ({ toggleDrawer, open }) => (
-  <Drawer
-    anchor="left"
-    open={open}
-  >
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row-reverse',
-      }}
+const MyDrawer = ({ toggleDrawer, open }) => {
+  const myRoutes = [
+    {
+      name: 'Hospitals',
+      path: '/',
+    },
+    {
+      name: 'Edit-Hospital',
+      path: '/entry/item',
+    },
+    {
+      name: 'Cities',
+      path: '/cities',
+    },
+    {
+      name: 'Edit-Cities',
+      path: '/cityentry/item',
+    },
+  ];
+  return (
+    <Drawer
+      anchor="left"
+      open={open}
     >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row-reverse',
+        }}
+      >
 
-      <IconButton onClick={toggleDrawer}>
-        <ChevronLeftIcon />
+        <IconButton onClick={toggleDrawer}>
+          <ChevronLeftIcon />
 
-      </IconButton>
-    </Box>
+        </IconButton>
+      </Box>
 
-    <Divider />
-    <Box
-      onClick={toggleDrawer}
-      onKeyDown={toggleDrawer}
-    >
+      <Divider />
+      <Box
+        onClick={toggleDrawer}
+        onKeyDown={toggleDrawer}
+      >
 
-      <List>
-        <ListItemButton>
-          <NavLink to="/">
-            <ListItemText primary="Hospitals" />
-          </NavLink>
-        </ListItemButton>
-        <ListItemButton>
-          <NavLink to="/entry/item">
-            <ListItemText primary="Edit-Hospital" />
-          </NavLink>
-        </ListItemButton>
-        <ListItemButton>
-          <NavLink to="cities">
-            <ListItemText primary="Cities" />
-          </NavLink>
-        </ListItemButton>
-        <ListItemButton>
-          <NavLink to="/cityentry/item">
-            <ListItemText primary="Edit-Cities" />
-          </NavLink>
-        </ListItemButton>
-      </List>
-    </Box>
-  </Drawer>
-);
+        <List>
+          {
+            myRoutes.map((route) => (
+              <ListItemButton key={route.path} to={route.path} component={NavLink}>
+                <ListItemText primary={route.name} />
+              </ListItemButton>
+
+            ))
+          }
+        </List>
+      </Box>
+    </Drawer>
+  );
+};
 MyDrawer.propTypes = {
   toggleDrawer: propTypes.func.isRequired,
   open: propTypes.bool.isRequired,
