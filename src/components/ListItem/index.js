@@ -4,21 +4,25 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 
-const MyListItem = ({ name, onEdit, onRemove }) => (
+const MyListItem = ({ name, functions }) => (
   <ListItem>
     <ListItemText sx={{ flexGrow: 1 }}>{name}</ListItemText>
     <Box my={1}>
 
       <ButtonGroup variant="contained">
-        <Button onClick={onRemove}>Remove</Button>
-        <Button onClick={onEdit}>Edit</Button>
+        {
+          Object.keys(functions).map((key) => (
+            <Button key={key} onClick={functions[key]}>{key}</Button>
+
+          ))
+        }
       </ButtonGroup>
     </Box>
   </ListItem>
 );
 MyListItem.propTypes = {
   name: propTypes.string.isRequired,
-  onEdit: propTypes.func.isRequired,
-  onRemove: propTypes.func.isRequired,
+  functions: propTypes.instanceOf(Object).isRequired,
+
 };
 export default MyListItem;
