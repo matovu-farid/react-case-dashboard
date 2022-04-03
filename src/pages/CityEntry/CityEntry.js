@@ -1,10 +1,14 @@
 import { useDispatch } from 'react-redux';
 import {
-  Button, ButtonGroup, FormControlLabel, FormGroup, TextField, Typography,
+  Button, ButtonGroup, FormGroup, Typography,
 } from '@mui/material';
 import { addCity, updateCity } from '../../redux/cities/cities';
 import getPosition from '../../helpers/get_position';
 import useCity from '../../Hooks/useCity';
+import FormErrorControl from '../../FormErrorControl';
+import {
+  MinMaxValidator, MultiValidator, NumberValidator, PatternValidator, RequiredValidator,
+} from '../Entry/validators';
 
 const CityEntry = () => {
   const {
@@ -34,27 +38,99 @@ const CityEntry = () => {
         City Entry
       </Typography>
       <form>
+        <FormErrorControl
+          decoration={{
+            label: 'name',
+            placeholder: 'Name',
+          }}
+          valueHandler={{
+            value: name,
+            setValue(text) {
+              setName(text);
+            },
+            errorFunction(text) {
+              return RequiredValidator(text);
+            },
+          }}
+        />
 
-        <TextField type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="City" name="name" required />
-        <TextField type="text" value={radius} onChange={(e) => setRadius(e.target.value)} placeholder="Radius" required />
+        <FormErrorControl
+          decoration={{
+            label: 'radius',
+            placeholder: 'Radius',
+          }}
+          valueHandler={{
+            value: radius,
+            setValue(text) {
+              setRadius(text);
+            },
+            errorFunction(text) {
+              return MultiValidator(text,
+                RequiredValidator,
+                NumberValidator);
+            },
+          }}
+        />
+
         <FormGroup>
+          <FormErrorControl
+            decoration={{
 
-          <FormControlLabel
-            label="latitude"
-            labelPlacement="top"
-            control={
+              label: 'latitude',
+              placeholder: '1.3733',
+            }}
+            valueHandler={{
+              value: `${latitude}`,
 
-              <TextField type="text" value={latitude} onChange={(e) => setLatitude(e.target.value)} name="latitude" placeholder="1.3733" required pattern="\d{1}\.\d+" />
-          }
+              setValue(text) {
+                setLatitude(text);
+              },
+              errorFunction(text) {
+                return MultiValidator(text,
+                  RequiredValidator,
+                  NumberValidator,
+                  { name: MinMaxValidator, params: [-10, 10] },
+                  {
+                    name: PatternValidator,
+                    params: {
+                      pattern: /\d{1}\.\d+/,
+                      messege: 'Not a valid latitude',
+                    },
+                  });
+              },
+
+            }}
+
           />
 
-          <FormControlLabel
-            label="longitude"
-            labelPlacement="top"
-            control={
+          <FormErrorControl
+            decoration={{
 
-              <TextField type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} name="longitude" placeholder="32.2903" required pattern="3\d{1}\.\d+" />
-          }
+              label: 'longitude',
+              placeholder: '32.2903',
+            }}
+            valueHandler={{
+              value: `${longitude}`,
+
+              setValue(text) {
+                setLongitude(text);
+              },
+              errorFunction(text) {
+                return MultiValidator(text,
+                  RequiredValidator,
+                  NumberValidator,
+                  { name: MinMaxValidator, params: [10, 40] },
+                  {
+                    name: PatternValidator,
+                    params: {
+                      pattern: /3\d{1}\.\d+/,
+                      messege: 'Not a valid longitude',
+                    },
+                  });
+              },
+
+            }}
+
           />
 
         </FormGroup>
