@@ -2,15 +2,24 @@ import { useEffect, useState } from 'react';
 import './Entry.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import {
+  Button,
+  ButtonGroup, FormGroup, Typography,
+} from '@mui/material';
 import { addHospital, updateHospital } from '../../redux/hospitals/hospitals';
 import getPosition from '../../helpers/get_position';
+import FormErrorControl from '../../FormErrorControl';
+import {
+  MinMaxValidator,
+  MultiValidator, NumberValidator, PatternValidator, RequiredValidator,
+} from './validators';
 
 const Entry = () => {
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
-  const [longitudeInput, setLongitude] = useState('');
+  const [longitudeTextField, setLongitude] = useState('');
   const { id } = useParams();
-  const [latitudeInput, setLatitude] = useState('');
+  const [latitudeTextField, setLatitude] = useState('');
 
   const item = useSelector((state) => state.hospitals).find((hospital) => hospital.id === id);
   useEffect(() => {
@@ -27,41 +36,134 @@ const Entry = () => {
     const hospital = {
       name,
       contact,
-      position: getPosition(latitudeInput, longitudeInput),
+      position: getPosition(latitudeTextField, longitudeTextField),
     };
     if (item) dispatch(updateHospital({ ...hospital, id }));
     else dispatch(addHospital(hospital));
   };
   const viewOnMap = () => {
-    if (latitudeInput && longitudeInput) {
-      const url = `https://www.google.co.ug/maps/@${latitudeInput},${longitudeInput},15z`;
+    if (latitudeTextField && longitudeTextField) {
+      const url = `https://www.google.co.ug/maps/@${latitudeTextField},${longitudeTextField},15z`;
       window.open(url, '_blank');
     }
   };
   return (
-    <form>
-      <input type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} name="name" className="input" required />
-      <input type="text" value={contact} placeholder="contact" onChange={(e) => setContact(e.target.value)} name="contact" className="input" required />
-      <fieldset>
-        <legend>Location</legend>
-        <label htmlFor="latitude">Latitude</label>
-        <input type="text" value={latitudeInput} onChange={(e) => setLatitude(e.target.value)} name="latitude" className="input" placeholder="1.3733" required pattern="\d{1}\.\d+" />
+    <>
+      <Typography variant="h2">
+        Hospital Entry
+      </Typography>
+      <form>
+        <FormGroup>
+          <FormErrorControl
+            decoration={{
+              label: 'name',
+              placeholder: 'Name',
+            }}
+            valueHandler={{
+              value: name,
+              setValue(text) {
+                setName(text);
+              },
+              errorFunction(text) {
+                return RequiredValidator(text);
+              },
+            }}
+          />
+          <FormErrorControl
+            decoration={{
+              label: 'contact',
+              placeholder: '0705222144',
+            }}
+            valueHandler={{
+              value: contact,
+              setValue(text) {
+                setContact(text);
+              },
+              errorFunction(text) {
+                return MultiValidator(text,
+                  RequiredValidator,
+                  NumberValidator,
 
-        <label htmlFor="longitude">Longitude</label>
-        <input type="text" id="longitude" value={longitudeInput} onChange={(e) => setLongitude(e.target.value)} name="longitude" className="input" placeholder="32.2903" required pattern="3\d{1}\.\d+" />
+                  { name: PatternValidator, params: { pattern: /\d{10,12}/ }, messege: 'Not a contact' });
+              },
+            }}
+          />
+        </FormGroup>
 
-      </fieldset>
-      {
+        <FormGroup>
+          <FormErrorControl
+            decoration={{
+
+              label: 'latitude',
+              placeholder: '1.3733',
+            }}
+            valueHandler={{
+              value: `${latitudeTextField}`,
+
+              setValue(text) {
+                setLatitude(text);
+              },
+              errorFunction(text) {
+                return MultiValidator(text,
+                  RequiredValidator,
+                  NumberValidator,
+                  { name: MinMaxValidator, params: [-10, 10] },
+                  {
+                    name: PatternValidator,
+                    params: {
+                      pattern: /\d{1}\.\d+/,
+                      messege: 'Not a valid latitude',
+                    },
+                  });
+              },
+
+            }}
+
+          />
+
+          <FormErrorControl
+            decoration={{
+
+              label: 'longitude',
+              placeholder: '32.2903',
+            }}
+            valueHandler={{
+              value: `${longitudeTextField}`,
+
+              setValue(text) {
+                setLongitude(text);
+              },
+              errorFunction(text) {
+                return MultiValidator(text,
+                  RequiredValidator,
+                  NumberValidator,
+                  { name: MinMaxValidator, params: [10, 40] },
+                  {
+                    name: PatternValidator,
+                    params: {
+                      pattern: /3\d{1}\.\d+/,
+                      messege: 'Not a valid longitude',
+                    },
+                  });
+              },
+
+            }}
+
+          />
+
+        </FormGroup>
+        {
         (id !== 'item') ? (
 
-          <div className="entry-buttons">
-            <button onClick={onClick} type="button">Add</button>
-            <button onClick={viewOnMap} type="button">View On Maps</button>
-          </div>
+          <ButtonGroup variant="contained">
+            <Button onClick={onClick}>Add</Button>
+            <Button onClick={viewOnMap}>View On Maps</Button>
+          </ButtonGroup>
         )
-          : <button onClick={onClick} type="button">Add</button>
+          : <Button variant="contained" onClick={onClick}>Add</Button>
 }
-    </form>
+      </form>
+    </>
   );
 };
 

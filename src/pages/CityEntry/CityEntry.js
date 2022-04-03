@@ -1,4 +1,7 @@
 import { useDispatch } from 'react-redux';
+import {
+  Button, ButtonGroup, FormControlLabel, FormGroup, TextField, Typography,
+} from '@mui/material';
 import { addCity, updateCity } from '../../redux/cities/cities';
 import getPosition from '../../helpers/get_position';
 import useCity from '../../Hooks/useCity';
@@ -26,32 +29,49 @@ const CityEntry = () => {
     else dispatch(addCity(city));
   };
   return (
-    <form>
+    <>
+      <Typography variant="h2">
+        City Entry
+      </Typography>
+      <form>
 
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="City" name="name" className="input" required />
-      <input type="text" value={radius} onChange={(e) => setRadius(e.target.value)} placeholder="Radius" className="input" required />
-      <fieldset>
-        <legend>Location</legend>
-        <label htmlFor="latitude">Latitude</label>
-        <input type="text" value={latitude} onChange={(e) => setLatitude(e.target.value)} name="latitude" className="input" placeholder="1.3733" required pattern="\d{1}\.\d+" />
+        <TextField type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="City" name="name" required />
+        <TextField type="text" value={radius} onChange={(e) => setRadius(e.target.value)} placeholder="Radius" required />
+        <FormGroup>
 
-        <label htmlFor="longitude">Longitude</label>
-        <input type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} name="longitude" className="input" placeholder="32.2903" required pattern="3\d{1}\.\d+" />
+          <FormControlLabel
+            label="latitude"
+            labelPlacement="top"
+            control={
 
-      </fieldset>
-      {
+              <TextField type="text" value={latitude} onChange={(e) => setLatitude(e.target.value)} name="latitude" placeholder="1.3733" required pattern="\d{1}\.\d+" />
+          }
+          />
+
+          <FormControlLabel
+            label="longitude"
+            labelPlacement="top"
+            control={
+
+              <TextField type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} name="longitude" placeholder="32.2903" required pattern="3\d{1}\.\d+" />
+          }
+          />
+
+        </FormGroup>
+        {
         (id !== 'item') ? (
 
-          <div className="entry-buttons">
-            <button onClick={onClick} type="button">Add</button>
-            <button onClick={viewOnMap} type="button">View On Maps</button>
-          </div>
+          <ButtonGroup variant="contained">
+            <Button onClick={onClick}>Add</Button>
+            <Button onClick={viewOnMap}>View On Maps</Button>
+          </ButtonGroup>
         )
 
-          : <button onClick={onClick} type="button">Add</button>
+          : <Button variant="contained" onClick={onClick} type="button">Add</Button>
 }
 
-    </form>
+      </form>
+    </>
   );
 };
 
