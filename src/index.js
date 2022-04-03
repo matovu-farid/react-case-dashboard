@@ -7,19 +7,23 @@ import CssBaseline from '@mui/material/CssBaseline';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/configureStore';
+import ErrorBoundary from './components/ErrorBoundary';
 
 ReactDOM.render(
-  <Provider store={store}>
+  <ErrorBoundary>
 
-    <BrowserRouter>
-      <React.StrictMode>
-        <CssBaseline>
+    <Provider store={store}>
 
-          <App />
-        </CssBaseline>
-      </React.StrictMode>
-    </BrowserRouter>
-  </Provider>,
+      <BrowserRouter>
+        <React.StrictMode>
+          <CssBaseline>
+
+            <App />
+          </CssBaseline>
+        </React.StrictMode>
+      </BrowserRouter>
+    </Provider>
+  </ErrorBoundary>,
   document.getElementById('root'),
 );
 

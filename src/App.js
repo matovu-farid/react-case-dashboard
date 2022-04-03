@@ -10,6 +10,7 @@ import CityEntry from './pages/CityEntry/CityEntry';
 import { fetchCities } from './redux/cities/cities';
 import HospitalsByCity from './pages/HospitalsByCity/HospitalsByCity';
 import HospitalsPage from './pages/HospitalsPage/HospitalsPage';
+import MyTheme from './Theme';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function App() {
     dispatch(fetchCities());
   }, []);
   return (
-    <>
+    <MyTheme>
       <Navbar />
       <Routes>
         <Route path="/" element={<HospitalsPage />} />
@@ -31,7 +32,7 @@ function App() {
 
         <Route path="/cities/:id" element={<HospitalsByCity />} />
       </Routes>
-    </>
+    </MyTheme>
   );
 }
 
