@@ -11,7 +11,9 @@ Th app is a dashborad for the case medinsurance mobile application built for the
 
 ## Built With
 
-- Ruby
+- React
+- JavaScript
+- Redux
 
 ## Deployment
 [The site is deployed](https://frosty-beaver-391916.netlify.app)
